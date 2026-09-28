@@ -9,3 +9,4 @@
 | 5 | [Kế hoạch kiểm thử](05-ke-hoach-kiem-thu.md) | Chiến lược, 58 test case, mẫu báo cáo lỗi |
 
 Các sơ đồ viết bằng **mermaid**: xem trực tiếp trên GitHub/GitLab, trong VS Code (extension *Markdown Preview Mermaid Support*) hoặc dán vào https://mermaid.live để xuất ảnh đưa vào báo cáo Word.
+| 6 | [Bộ tài liệu Lab Claude Projects](lab/README.md) | Charter, WBS, PERT/CPM, chi phí, rủi ro theo khung bài lab (Word + Excel) |
