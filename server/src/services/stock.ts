@@ -18,6 +18,7 @@ export interface StockRow {
   purchase_price: number;
   sale_price: number;
   min_stock: number;
+  min_stock_branch: number;
   requires_rx: number;
   stock: number;
   nearest_expiry: string | null;
@@ -33,7 +34,7 @@ export function stockList(branchId: number | null): StockRow[] {
   const rows = all<Omit<StockRow, 'status'>>(
     `SELECT m.id, m.code, m.name, m.active_ingredient, m.category_id, c.name AS category,
             m.supplier_id, s.name AS supplier, m.unit, m.purchase_price, m.sale_price,
-            m.min_stock * ? AS min_stock, m.requires_rx,
+            m.min_stock * ? AS min_stock, m.min_stock AS min_stock_branch, m.requires_rx,
             COALESCE(st.stock, 0) AS stock, st.nearest_expiry
      FROM medicines m
      JOIN categories c ON c.id = m.category_id

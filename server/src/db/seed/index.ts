@@ -202,7 +202,13 @@ export function seed(now = new Date()) {
         const target =
           roll < 0.06 ? 0 : roll < 0.16 ? rng.int(1, m.min_stock - 1) : Math.round(m.min_stock * (1.2 + rng.next() * 3));
         const first = Math.round(target * 0.7);
-        list.forEach((bt, i) => setQty.run(i === 0 ? first : i === 1 ? target - first : 0, null, bt.id));
+        // Lô còn hàng phải còn hạn ít nhất ~5 tháng (trừ các lô được chọn làm cảnh báo bên dưới)
+        const safeExpiry = () => fmtDate(addDays(today, rng.int(150, 720)));
+        list.forEach((bt, i) => {
+          const q = i === 0 ? first : i === 1 ? target - first : 0;
+          const exp = (db.prepare('SELECT expiry_date FROM batches WHERE id = ?').get(bt.id) as { expiry_date: string }).expiry_date;
+          setQty.run(q, q > 0 && exp < fmtDate(addDays(today, 150)) ? safeExpiry() : null, bt.id);
+        });
         // Một số lô đầu kỳ còn tồn và sắp hết hạn (hoặc đã hết hạn) -> tạo cảnh báo
         const oldest = list[list.length - 1];
         const r2 = rng.next();

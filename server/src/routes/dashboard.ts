@@ -133,7 +133,9 @@ router.get('/revenue', (req, res) => {
   if (prevFrom) {
     // So sánh với kỳ trước có cùng độ dài tính đến cùng thời điểm
     const prevTo = cfg.bucket === 'month' ? addMonths(now, -cfg.len) : addDays(now, -(cfg.bucket === 'hour' ? 1 : cfg.len));
-    change = pctChange(total, totals(req, fmtDateTime(prevFrom), fmtDateTime(prevTo)).revenue);
+    const prevRevenue = totals(req, fmtDateTime(prevFrom), fmtDateTime(prevTo)).revenue;
+    // Không có dữ liệu kỳ trước -> không so sánh (tránh hiển thị +100% gây hiểu nhầm)
+    change = prevRevenue ? pctChange(total, prevRevenue) : null;
   }
   res.json({ range: key, bucket: cfg.bucket, total, change, points });
 });

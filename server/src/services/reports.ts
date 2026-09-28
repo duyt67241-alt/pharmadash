@@ -198,6 +198,8 @@ function footer(doc: PDFKit.PDFDocument) {
   const range = doc.bufferedPageRange();
   for (let i = range.start; i < range.start + range.count; i++) {
     doc.switchToPage(i);
+    // Bỏ lề dưới tạm thời để chữ ở chân trang không đẩy sang trang mới
+    doc.page.margins.bottom = 0;
     doc.font('R').fontSize(8).fillColor(GRAY).text(
       `Xuất lúc ${fmtDateTime(new Date())} · Trang ${i + 1}/${range.count}`,
       40, doc.page.height - 30, { width: doc.page.width - 80, align: 'right', lineBreak: false },
@@ -217,7 +219,7 @@ export function revenuePdf(r: ReturnType<typeof revenueReport>, branchName: stri
 
   heading(doc, 'Doanh thu theo nhóm thuốc');
   table(doc, [{ header: 'Nhóm thuốc', width: 235 }, { header: 'Số lượng', width: 80, align: 'right' }, { header: 'Doanh thu', width: 120, align: 'right' }, { header: 'Tỷ trọng', width: 80, align: 'right' }],
-    r.categories.map((c) => [c.name, c.quantity.toLocaleString('vi-VN'), vnd(c.revenue), `${((c.revenue / (s.revenue || 1)) * 100).toFixed(1)}%`]));
+    r.categories.map((c) => [c.name, c.quantity.toLocaleString('vi-VN'), vnd(c.revenue), `${((c.revenue / (s.revenue || 1)) * 100).toFixed(1).replace('.', ',')}%`]));
 
   heading(doc, 'Top 10 thuốc bán chạy');
   table(doc, [{ header: '#', width: 25 }, { header: 'Tên thuốc', width: 250 }, { header: 'Số lượng', width: 100, align: 'right' }, { header: 'Doanh thu', width: 140, align: 'right' }],

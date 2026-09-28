@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============ DESIGN TOKENS (giá trị "R G B") ============ */
+@layer base {
+  :root {
+    color-scheme: light;
+    --bg: 247 247 251;            /* nền app #F7F7FB */
+    --surface: 255 255 255;       /* card */
+    --surface-2: 250 250 252;     /* nền phụ / hover hàng bảng */
+    --muted: 243 243 248;         /* menu đang chọn, ô input */
+    --line: 236 236 243;          /* viền mảnh #ECECF3 */
+    --line-strong: 222 222 232;
+    --ink: 17 17 26;              /* chữ chính */
+    --ink-2: 82 82 102;           /* chữ phụ */
+    --ink-3: 132 132 152;         /* nhãn nhỏ, trục biểu đồ */
+    --primary: 109 74 255;        /* #6D4AFF */
+    --primary-hover: 92 56 240;
+    --primary-soft: 240 236 255;
+    --primary-ink: 84 51 224;
+    --success: 18 145 88;
+    --success-soft: 231 246 238;
+    --danger: 214 48 64;
+    --danger-soft: 253 236 238;
+    --warning: 217 119 6;
+    --warning-soft: 255 243 224;
+    --info: 37 115 230;
+    --info-soft: 232 241 255;
+    /* Biểu đồ: thang tím thứ bậc (nhạt -> đậm), kiểm tra >= 2:1 trên nền trắng */
+    --chart-1: 160 139 255;       /* #A08BFF */
+    --chart-2: 124 92 255;        /* #7C5CFF */
+    --chart-3: 90 54 224;         /* #5A36E0 */
+    --chart-4: 59 31 163;         /* #3B1FA3 */
+    --chart-bar: 233 227 255;     /* cột thường: tím rất nhạt */
+    --chart-cap: 160 139 255;     /* viền đỉnh cột */
+    --chart-grid: 238 238 244;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --bg: 13 12 18;
+    --surface: 23 22 31;          /* #17161F */
+    --surface-2: 29 28 39;
+    --muted: 36 34 48;
+    --line: 42 40 56;
+    --line-strong: 58 56 76;
+    --ink: 240 240 246;
+    --ink-2: 188 188 204;
+    --ink-3: 130 130 152;
+    --primary: 128 102 255;
+    --primary-hover: 146 124 255;
+    --primary-soft: 38 32 72;
+    --primary-ink: 176 160 255;
+    --success: 52 199 123;
+    --success-soft: 19 48 35;
+    --danger: 248 99 112;
+    --danger-soft: 60 22 30;
+    --warning: 245 166 70;
+    --warning-soft: 58 38 16;
+    --info: 96 160 255;
+    --info-soft: 22 36 64;
+    /* Thang tối: bậc gần nền nhất vẫn >= 2:1 trên #17161F */
+    --chart-1: 82 56 204;         /* #5238CC */
+    --chart-2: 107 79 234;        /* #6B4FEA */
+    --chart-3: 142 120 255;       /* #8E78FF */
+    --chart-4: 187 174 255;       /* #BBAEFF */
+    --chart-bar: 48 42 84;
+    --chart-cap: 128 102 255;
+    --chart-grid: 38 36 50;
+  }
+
+  html {
+    @apply bg-bg text-ink antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  body {
+    @apply bg-bg text-[13px] leading-5;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary/40 ring-offset-1 ring-offset-surface;
+  }
+  ::selection {
+    @apply bg-primary/20;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-card border border-line bg-surface shadow-card;
+  }
+  .input {
+    @apply h-9 w-full rounded-ctl border border-line bg-surface px-3 text-[13px] text-ink placeholder:text-ink-3
+      transition-colors hover:border-line-strong focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/15;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium text-ink-2;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Thanh cuộn mảnh */
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line-strong)) transparent;
+  }
+}
+
+/* Recharts: bỏ viền focus mặc định */
+.recharts-wrapper *:focus {
+  outline: none;
+}
