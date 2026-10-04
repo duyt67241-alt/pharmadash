@@ -110,9 +110,10 @@ export class OrderGenerator {
     /** true: trừ tồn kho theo lô khi bán (demo/backfill). Seed thì gán tồn kho cuối cùng riêng. */
     private deductStock = false,
   ) {
-    // Tiếp nối số thứ tự hóa đơn đã có trong ngày
+    // Tiếp nối số thứ tự hóa đơn lớn nhất đã có của mọi ngày (mã HDyymmdd<chi nhánh><stt>).
+    // Không giới hạn số ngày: máy có thể tắt nhiều ngày rồi backfill bắt đầu từ ngày đã có đơn.
     for (const r of all<{ d: string; b: number; n: number }>(
-      "SELECT substr(created_at,1,10) d, branch_id b, COUNT(*) n FROM orders WHERE created_at >= date('now','-2 day') GROUP BY d, b",
+      'SELECT substr(created_at,1,10) d, branch_id b, MAX(CAST(substr(code,10) AS INTEGER)) n FROM orders GROUP BY d, b',
     )) {
       this.seqByDay.set(`${r.d}|${r.b}`, r.n);
     }
