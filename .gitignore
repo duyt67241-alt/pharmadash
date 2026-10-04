@@ -4,3 +4,6 @@ server/data/
 *.log
 .DS_Store
 .vscode/
+
+# File khóa tạm của Word/Excel
+~$*
