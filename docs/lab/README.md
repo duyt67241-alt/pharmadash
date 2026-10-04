@@ -1,6 +1,6 @@
 # Bộ tài liệu Lab QLDA – "Lập kế hoạch dự án với Claude Projects" (đề tài PharmaDash)
 
-Bài lab của thầy dùng tình huống EduReg làm ví dụ; nhóm chọn đề tài riêng là **PharmaDash**, đặt trong bối cảnh dự án giả định: chuỗi Nhà thuốc Tâm An (hư cấu) thuê đội 5 người làm hệ thống, ngân sách 250 triệu, khởi động 05/10/2026, go-live trước 31/12/2026.
+Bài lab của thầy dùng tình huống EduReg làm ví dụ; nhóm chọn đề tài riêng là **PharmaDash**, đặt trong bối cảnh dự án giả định: chuỗi Nhà thuốc Hữu Duyên (hư cấu) thuê đội 5 người làm hệ thống, ngân sách 250 triệu, khởi động 05/10/2026, go-live trước 31/12/2026.
 
 ## Các file
 

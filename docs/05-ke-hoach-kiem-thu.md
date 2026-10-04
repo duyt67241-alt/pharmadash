@@ -9,7 +9,7 @@
 | Môi trường | Windows 11, Node 24, Chrome/Edge bản mới nhất; độ rộng 1440px (desktop), 1024px (tablet), 390px (mobile) |
 | Dữ liệu | Dữ liệu seed chuẩn (`npm run seed`) – kết quả có thể lệch vài đơn do dữ liệu tự bù theo giờ |
 | Tiêu chí đạt | 100% test case mức **Cao** đạt; không còn lỗi mức Nghiêm trọng / Cao |
-| Tài khoản | `chu@taman.vn`, `quanly@taman.vn`, `nhanvien@taman.vn` – mật khẩu `123456` |
+| Tài khoản | `chu@huuduyen.vn`, `quanly@huuduyen.vn`, `nhanvien@huuduyen.vn` – mật khẩu `123456` |
 
 ## 5.2 Test case
 
@@ -19,15 +19,15 @@
 
 | ID | Mô tả | Các bước | Kết quả mong đợi | Ưu tiên | KQ |
 |---|---|---|---|---|---|
-| TC01 | Đăng nhập thành công | Nhập `chu@taman.vn` / `123456` → Đăng nhập | Vào trang Tổng quan, sidebar hiện "Tất cả chi nhánh" | C | |
+| TC01 | Đăng nhập thành công | Nhập `chu@huuduyen.vn` / `123456` → Đăng nhập | Vào trang Tổng quan, sidebar hiện "Tất cả chi nhánh" | C | |
 | TC02 | Sai mật khẩu | Nhập mật khẩu `111111` | Báo "Email hoặc mật khẩu không đúng", không chuyển trang | C | |
 | TC03 | Truy cập khi chưa đăng nhập | Mở trực tiếp `/orders` ở tab ẩn danh | Chuyển về `/login`; đăng nhập xong quay lại `/orders` | C | |
-| TC04 | Menu theo vai trò | Đăng nhập `nhanvien@taman.vn` | Chỉ có Tổng quan, Đơn hàng, Kho thuốc, Khách hàng; không có Nhập hàng/Nhân viên/Báo cáo | C | |
+| TC04 | Menu theo vai trò | Đăng nhập `nhanvien@huuduyen.vn` | Chỉ có Tổng quan, Đơn hàng, Kho thuốc, Khách hàng; không có Nhập hàng/Nhân viên/Báo cáo | C | |
 | TC05 | Chặn truy cập trang bằng URL | Nhân viên mở `/reports` | Hiện "Không có quyền truy cập" | C | |
 | TC06 | Chặn ở API | Dùng token nhân viên gọi `GET /api/purchases` | HTTP 403 | C | |
 | TC07 | Ẩn dữ liệu nhạy cảm | Nhân viên gọi `GET /api/medicines` | Không có trường `purchase_price`; KPI không có lợi nhuận | C | |
 | TC08 | Nhân viên chỉ thấy đơn của mình | Nhân viên mở Đơn hàng | Mọi đơn đều có cột Nhân viên = Nguyễn Ngọc Mai | C | |
-| TC09 | Quản lý bị giới hạn chi nhánh | `quanly@taman.vn` gọi `/api/orders?branch=2` | Chỉ trả đơn của CN Cầu Giấy (bỏ qua tham số branch) | C | |
+| TC09 | Quản lý bị giới hạn chi nhánh | `quanly@huuduyen.vn` gọi `/api/orders?branch=2` | Chỉ trả đơn của CN Cầu Giấy (bỏ qua tham số branch) | C | |
 | TC10 | Đổi chi nhánh (chủ) | Bấm ô tài khoản → chọn "CN Đống Đa" | KPI, biểu đồ, cảnh báo đổi theo chi nhánh | TB | |
 | TC11 | Đăng xuất | Ô tài khoản → Đăng xuất | Về trang đăng nhập, bấm Back không vào lại được | TB | |
 

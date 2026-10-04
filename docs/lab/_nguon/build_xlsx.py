@@ -61,7 +61,7 @@ ws.column_dimensions['B'].width = 26
 ws.column_dimensions['C'].width = 90
 ws['B2'] = 'LỊCH DỰ ÁN PHARMADASH – Bài Lab QLDA CNTT'
 ws['B2'].font = TITLE
-ws['B3'] = 'Dự án giả định: xây dựng Dashboard điều hành cho chuỗi Nhà thuốc Tâm An (hư cấu). Đơn vị thời gian: ngày làm việc (T2–T6).'
+ws['B3'] = 'Dự án giả định: xây dựng Dashboard điều hành cho chuỗi Nhà thuốc Hữu Duyên (hư cấu). Đơn vị thời gian: ngày làm việc (T2–T6).'
 ws['B3'].font = BLACK
 rows = [
     ('Quy ước màu', ''),

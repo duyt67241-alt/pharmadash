@@ -68,7 +68,7 @@ export function Sidebar({ collapsed, onToggle, canToggle, onNavigate }: Props) {
         <Logo className="h-8 w-8 shrink-0" />
         {!collapsed && (
           <div className="min-w-0 flex-1">
-            <div className="truncate text-[13px] font-semibold text-ink">Nhà thuốc Tâm An</div>
+            <div className="truncate text-[13px] font-semibold text-ink">Nhà thuốc Hữu Duyên</div>
             <div className="truncate text-2xs text-ink-3">PharmaDash · Điều hành</div>
           </div>
         )}

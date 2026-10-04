@@ -4,7 +4,7 @@
  * Nhà thuốc, chi nhánh, nhà cung cấp, con người đều là hư cấu.
  */
 
-export const PHARMACY_NAME = 'Nhà thuốc Tâm An';
+export const PHARMACY_NAME = 'Nhà thuốc Hữu Duyên';
 
 export const BRANCHES = [
   { name: 'CN Cầu Giấy', address: '112 Trần Duy Hưng, Cầu Giấy, Hà Nội', capacity: 16000 },
@@ -177,14 +177,14 @@ export const FIRST_FEMALE = ['An', 'Chi', 'Dung', 'Giang', 'Hà', 'Hằng', 'H�
 
 /** Tài khoản demo cố định (mật khẩu chung: 123456). */
 export const DEMO_USERS = [
-  { full_name: 'Trần Minh Tâm', email: 'chu@taman.vn', role: 'owner', branch: null },
-  { full_name: 'Lê Thu Hà', email: 'quanly@taman.vn', role: 'manager', branch: 0 },
-  { full_name: 'Phạm Quốc Việt', email: 'quanly.dd@taman.vn', role: 'manager', branch: 1 },
-  { full_name: 'Nguyễn Ngọc Mai', email: 'nhanvien@taman.vn', role: 'staff', branch: 0 },
-  { full_name: 'Đỗ Hoàng Long', email: 'long.dh@taman.vn', role: 'staff', branch: 0 },
-  { full_name: 'Vũ Phương Linh', email: 'linh.vp@taman.vn', role: 'staff', branch: 0 },
-  { full_name: 'Bùi Đức Anh', email: 'anh.bd@taman.vn', role: 'staff', branch: 1 },
-  { full_name: 'Hoàng Kim Oanh', email: 'oanh.hk@taman.vn', role: 'staff', branch: 1 },
+  { full_name: 'Trần Minh Tâm', email: 'chu@huuduyen.vn', role: 'owner', branch: null },
+  { full_name: 'Lê Thu Hà', email: 'quanly@huuduyen.vn', role: 'manager', branch: 0 },
+  { full_name: 'Phạm Quốc Việt', email: 'quanly.dd@huuduyen.vn', role: 'manager', branch: 1 },
+  { full_name: 'Nguyễn Ngọc Mai', email: 'nhanvien@huuduyen.vn', role: 'staff', branch: 0 },
+  { full_name: 'Đỗ Hoàng Long', email: 'long.dh@huuduyen.vn', role: 'staff', branch: 0 },
+  { full_name: 'Vũ Phương Linh', email: 'linh.vp@huuduyen.vn', role: 'staff', branch: 0 },
+  { full_name: 'Bùi Đức Anh', email: 'anh.bd@huuduyen.vn', role: 'staff', branch: 1 },
+  { full_name: 'Hoàng Kim Oanh', email: 'oanh.hk@huuduyen.vn', role: 'staff', branch: 1 },
 ] as const;
 
 export const DEMO_PASSWORD = '123456';

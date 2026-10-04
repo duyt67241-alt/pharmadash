@@ -115,7 +115,7 @@ const knowledge = new Document({
       P('TÀI LIỆU YÊU CẦU KHÁCH HÀNG – DỰ ÁN PHARMADASH', { bold: true, size: 30, color: NAVY, align: C, after: 60 }),
       P('Hệ thống Dashboard điều hành chuỗi nhà thuốc (tình huống giả định phục vụ học tập)', { italics: true, align: C, after: 240 }),
       H2('A1. Giới thiệu'),
-      P('Chuỗi Nhà thuốc Tâm An có 2 chi nhánh tại Hà Nội (Cầu Giấy và Đống Đa), khoảng 12 nhân viên, kinh doanh khoảng 1.200 mặt hàng thuốc và vật tư y tế, trung bình 80–110 hóa đơn mỗi ngày trên cả chuỗi.'),
+      P('Chuỗi Nhà thuốc Hữu Duyên có 2 chi nhánh tại Hà Nội (Cầu Giấy và Đống Đa), khoảng 12 nhân viên, kinh doanh khoảng 1.200 mặt hàng thuốc và vật tư y tế, trung bình 80–110 hóa đơn mỗi ngày trên cả chuỗi.'),
       P('Hiện nay việc bán hàng dùng một phần mềm bán hàng mua sẵn tại quầy; tồn kho và hạn dùng được theo dõi bằng file Excel riêng ở từng chi nhánh. Cuối mỗi tháng chủ nhà thuốc mất khoảng 1 ngày làm việc để tổng hợp báo cáo từ 2 chi nhánh. Năm 2025 nhà thuốc phải hủy khoảng 45 triệu đồng thuốc hết hạn do phát hiện muộn, đồng thời thường xuyên hết hàng các thuốc bán chạy vào mùa cảm cúm.'),
       P('Chủ nhà thuốc muốn có một hệ thống web giúp theo dõi hoạt động kinh doanh gần như theo thời gian thực trên một màn hình, cảnh báo sớm hàng sắp hết hạn / sắp hết và xuất báo cáo nhanh.'),
       H2('A2. Yêu cầu chức năng'),
@@ -195,7 +195,7 @@ const cover = [
   P('BÁO CÁO BÀI THỰC HÀNH (LAB)', { align: C, bold: true, size: 36, color: NAVY, after: 120 }),
   P('Lập kế hoạch dự án phần mềm với trợ lý AI – Claude Projects', { align: C, size: 26, color: NAVY, after: 600 }),
   P([{ t: 'Đề tài: ', bold: true }, { t: 'PharmaDash – Hệ thống Dashboard điều hành chuỗi nhà thuốc' }], { align: C, size: 24, after: 60 }),
-  P('(dự án giả định: khách hàng là chuỗi Nhà thuốc Tâm An – hư cấu)', { align: C, italics: true, size: 19, after: 600 }),
+  P('(dự án giả định: khách hàng là chuỗi Nhà thuốc Hữu Duyên – hư cấu)', { align: C, italics: true, size: 19, after: 600 }),
   T([900, 3900, 2600, 2238], [
     ['STT', 'Họ và tên', 'MSSV', 'Vai trò trong lab'],
     ['1', { t: 'Họ tên', todo: true }, { t: 'MSSV', todo: true }, 'Trưởng nhóm (PM)'],
@@ -237,7 +237,7 @@ const part2 = [
   T([2700, 6938], [
     ['Mục', 'Nội dung'],
     ['Tên dự án / Mã dự án', 'PharmaDash – Hệ thống Dashboard điều hành chuỗi nhà thuốc / PD-2026-01'],
-    ['Nhà tài trợ (Sponsor) / Quản lý dự án (PM)', 'Chủ chuỗi Nhà thuốc Tâm An / Trưởng nhóm dự án'],
+    ['Nhà tài trợ (Sponsor) / Quản lý dự án (PM)', 'Chủ chuỗi Nhà thuốc Hữu Duyên / Trưởng nhóm dự án'],
     ['Mục đích và lý do thực hiện (Business case)', 'Chủ nhà thuốc hiện mất khoảng 1 ngày/tháng tổng hợp báo cáo thủ công từ 2 chi nhánh; năm 2025 phải hủy khoảng 45 triệu đồng thuốc hết hạn do phát hiện muộn và thường hết hàng thuốc bán chạy vào mùa cảm cúm. PharmaDash tập trung số liệu bán hàng – tồn kho theo lô trên một màn hình, cảnh báo sớm hạn dùng và hết hàng, giúp giảm thất thoát và ra quyết định nhập hàng nhanh hơn.'],
     ['Ngân sách tổng', `250.000.000 đ (dự toán ${vnd(total)}, gồm 10% dự phòng – xem mục 5)`],
     ['Thời gian', 'Khởi động 05/10/2026 – go-live chậm nhất 31/12/2026 (64 ngày làm việc)'],

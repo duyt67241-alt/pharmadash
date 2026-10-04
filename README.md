@@ -1,6 +1,6 @@
 # PharmaDash – Dashboard điều hành nhà thuốc
 
-Đồ án môn **Quản lý dự án Công nghệ thông tin**. Web app giúp chủ / quản lý nhà thuốc theo dõi hoạt động kinh doanh theo thời gian thực: doanh thu, đơn hàng, tồn kho theo lô, hạn dùng, nhập hàng, khách hàng và nhân viên. Toàn bộ dữ liệu là **dữ liệu giả lập** (nhà thuốc "Tâm An" với 2 chi nhánh là hư cấu).
+Đồ án môn **Quản lý dự án Công nghệ thông tin**. Web app giúp chủ / quản lý nhà thuốc theo dõi hoạt động kinh doanh theo thời gian thực: doanh thu, đơn hàng, tồn kho theo lô, hạn dùng, nhập hàng, khách hàng và nhân viên. Toàn bộ dữ liệu là **dữ liệu giả lập** (nhà thuốc "Hữu Duyên" với 2 chi nhánh là hư cấu).
 
 ## Chạy nhanh
 
@@ -15,9 +15,9 @@ Mở **http://localhost:5173**. Lần chạy đầu, server tự tạo CSDL và 
 
 | Vai trò | Email | Mật khẩu | Quyền |
 |---|---|---|---|
-| Chủ nhà thuốc | `chu@taman.vn` | `123456` | Mọi chi nhánh, lợi nhuận, báo cáo |
-| Quản lý | `quanly@taman.vn` | `123456` | Toàn quyền tại CN Cầu Giấy |
-| Nhân viên bán hàng | `nhanvien@taman.vn` | `123456` | Chỉ doanh số của mình, không thấy giá nhập |
+| Chủ nhà thuốc | `chu@huuduyen.vn` | `123456` | Mọi chi nhánh, lợi nhuận, báo cáo |
+| Quản lý | `quanly@huuduyen.vn` | `123456` | Toàn quyền tại CN Cầu Giấy |
+| Nhân viên bán hàng | `nhanvien@huuduyen.vn` | `123456` | Chỉ doanh số của mình, không thấy giá nhập |
 
 ### Lệnh khác
 

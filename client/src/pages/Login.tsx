@@ -9,16 +9,16 @@ import { cn } from '../lib/cn';
 
 /** Tài khoản demo để bấm điền nhanh khi thuyết trình. */
 const DEMO = [
-  { email: 'chu@taman.vn', role: 'Chủ nhà thuốc', desc: 'Xem tất cả chi nhánh, lợi nhuận, báo cáo', icon: ShieldCheck },
-  { email: 'quanly@taman.vn', role: 'Quản lý', desc: 'CN Cầu Giấy: kho, nhập hàng, nhân viên', icon: Store },
-  { email: 'nhanvien@taman.vn', role: 'Nhân viên bán hàng', desc: 'Chỉ xem doanh số của mình, không thấy giá nhập', icon: UserRound },
+  { email: 'chu@huuduyen.vn', role: 'Chủ nhà thuốc', desc: 'Xem tất cả chi nhánh, lợi nhuận, báo cáo', icon: ShieldCheck },
+  { email: 'quanly@huuduyen.vn', role: 'Quản lý', desc: 'CN Cầu Giấy: kho, nhập hàng, nhân viên', icon: Store },
+  { email: 'nhanvien@huuduyen.vn', role: 'Nhân viên bán hàng', desc: 'Chỉ xem doanh số của mình, không thấy giá nhập', icon: UserRound },
 ];
 
 export default function Login() {
   const { user, login } = useAuth();
   const nav = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState('chu@taman.vn');
+  const [email, setEmail] = useState('chu@huuduyen.vn');
   const [password, setPassword] = useState('123456');
   const [show, setShow] = useState(false);
   const [error, setError] = useState('');
@@ -47,7 +47,7 @@ export default function Login() {
           <div className="mb-8 flex items-center gap-3">
             <Logo className="h-10 w-10" />
             <div>
-              <div className="text-base font-semibold text-ink">Nhà thuốc Tâm An</div>
+              <div className="text-base font-semibold text-ink">Nhà thuốc Hữu Duyên</div>
               <div className="text-xs text-ink-3">PharmaDash · Hệ thống điều hành</div>
             </div>
           </div>

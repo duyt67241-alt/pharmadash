@@ -2,9 +2,9 @@ import { Keyboard, ShieldCheck, Store, UserRound } from 'lucide-react';
 import { PageHeader } from '../components/ui/Misc';
 
 const ROLES = [
-  { icon: ShieldCheck, title: 'Chủ nhà thuốc', email: 'chu@taman.vn', items: ['Xem mọi chi nhánh (đổi ở ô tài khoản trên sidebar)', 'Thấy lợi nhuận, giá nhập, báo cáo', 'Quản lý kho, nhập hàng, nhân viên'] },
-  { icon: Store, title: 'Quản lý', email: 'quanly@taman.vn', items: ['Toàn quyền trong chi nhánh của mình', 'Duyệt / nhận phiếu nhập', 'Xuất báo cáo CSV/PDF'] },
-  { icon: UserRound, title: 'Nhân viên bán hàng', email: 'nhanvien@taman.vn', items: ['Chỉ thấy doanh số và đơn của mình', 'Xem tồn kho, cảnh báo hạn dùng (không thấy giá nhập)', 'Tra cứu khách hàng'] },
+  { icon: ShieldCheck, title: 'Chủ nhà thuốc', email: 'chu@huuduyen.vn', items: ['Xem mọi chi nhánh (đổi ở ô tài khoản trên sidebar)', 'Thấy lợi nhuận, giá nhập, báo cáo', 'Quản lý kho, nhập hàng, nhân viên'] },
+  { icon: Store, title: 'Quản lý', email: 'quanly@huuduyen.vn', items: ['Toàn quyền trong chi nhánh của mình', 'Duyệt / nhận phiếu nhập', 'Xuất báo cáo CSV/PDF'] },
+  { icon: UserRound, title: 'Nhân viên bán hàng', email: 'nhanvien@huuduyen.vn', items: ['Chỉ thấy doanh số và đơn của mình', 'Xem tồn kho, cảnh báo hạn dùng (không thấy giá nhập)', 'Tra cứu khách hàng'] },
 ];
 
 export default function Help() {
