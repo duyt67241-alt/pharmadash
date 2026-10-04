@@ -38,12 +38,12 @@ export function TopMedicines({ className, delay }: { className?: string; delay?:
         <li key={m.id}>
           <div className="flex items-baseline justify-between gap-2">
             <div className="flex min-w-0 items-baseline gap-2">
-              <span className="num w-4 shrink-0 text-2xs font-semibold text-ink-3">{i + 1}</span>
+              <span className={cn('num flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold', i === 0 ? 'bg-[#F5B400] text-white' : i === 1 ? 'bg-[#A7B0BE] text-white' : i === 2 ? 'bg-[#D08A4E] text-white' : 'bg-muted text-ink-3')}>{i + 1}</span>
               <span className="truncate text-[13px] font-medium text-ink" title={m.name}>{m.name}</span>
             </div>
             <span className="num shrink-0 text-xs font-semibold text-ink">{vndCompact(m.revenue)}</span>
           </div>
-          <div className="mt-1.5 flex items-center gap-2 pl-6">
+          <div className="mt-1.5 flex items-center gap-2 pl-7">
             <ProgressBar value={m.percent} />
             <span className="num w-14 shrink-0 text-right text-2xs text-ink-3">{num(m.quantity)} {m.unit.toLowerCase()}</span>
           </div>
@@ -177,7 +177,7 @@ export function CategoryRevenueCard({ className, delay }: { className?: string; 
                 </span>
               </div>
               <div className="mt-1 h-2 w-full rounded-full bg-muted" title={vnd(c.revenue)}>
-                <div className="h-full origin-left rounded-full bg-primary/80 transition-all group-hover:bg-primary motion-safe:animate-grow-x" style={{ width: `${(c.revenue / max) * 100}%` }} />
+                <div className="h-full origin-left rounded-full bg-gradient-to-r from-primary to-pink opacity-85 transition-all group-hover:opacity-100 motion-safe:animate-grow-x" style={{ width: `${(c.revenue / max) * 100}%` }} />
               </div>
             </li>
           ))}

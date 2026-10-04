@@ -35,6 +35,15 @@
     --chart-bar: 233 227 255;     /* cột thường: tím rất nhạt */
     --chart-cap: 160 139 255;     /* viền đỉnh cột */
     --chart-grid: 238 238 244;
+    /* Màu nhấn phụ: KPI, icon, gradient trang trí */
+    --blue: 37 99 235;
+    --blue-soft: 232 240 255;
+    --green: 5 150 105;
+    --green-soft: 225 246 237;
+    --orange: 234 88 12;
+    --orange-soft: 255 239 225;
+    --pink: 219 39 119;
+    --pink-soft: 253 232 243;
   }
 
   .dark {
@@ -68,6 +77,14 @@
     --chart-bar: 48 42 84;
     --chart-cap: 128 102 255;
     --chart-grid: 38 36 50;
+    --blue: 96 165 250;
+    --blue-soft: 23 37 66;
+    --green: 52 211 153;
+    --green-soft: 16 48 38;
+    --orange: 251 146 60;
+    --orange-soft: 60 34 14;
+    --pink: 244 114 182;
+    --pink-soft: 62 22 44;
   }
 
   html {

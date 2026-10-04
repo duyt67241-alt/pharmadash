@@ -66,7 +66,7 @@ export function ProgressBar({ value, tone = 'primary', className }: { value: num
   return (
     <div className={cn('h-1.5 w-full overflow-hidden rounded-full bg-primary-soft', className)}>
       <div
-        className={cn('h-full origin-left rounded-full transition-all duration-500 motion-safe:animate-grow-x', { primary: 'bg-primary', warning: 'bg-warning', danger: 'bg-danger' }[tone])}
+        className={cn('h-full origin-left rounded-full transition-all duration-500 motion-safe:animate-grow-x', { primary: 'bg-gradient-to-r from-primary to-pink', warning: 'bg-warning', danger: 'bg-danger' }[tone])}
         style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
       />
     </div>

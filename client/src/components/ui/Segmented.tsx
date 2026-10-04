@@ -7,7 +7,7 @@ interface Option<T extends string> {
 
 /** Nhóm nút chọn 1 (tab lọc 1N/1T/..., Hôm nay/7 ngày/30 ngày). */
 export function Segmented<T extends string>({
-  options, value, onChange, size = 'sm', className, ariaLabel,
+  options, value, onChange, size = 'sm', className, ariaLabel, onDark,
 }: {
   options: Option<T>[];
   value: T;
@@ -15,9 +15,11 @@ export function Segmented<T extends string>({
   size?: 'xs' | 'sm';
   className?: string;
   ariaLabel?: string;
+  /** Dùng trên nền màu đậm (banner) */
+  onDark?: boolean;
 }) {
   return (
-    <div role="tablist" aria-label={ariaLabel} className={cn('inline-flex items-center gap-0.5 rounded-ctl bg-muted p-0.5', className)}>
+    <div role="tablist" aria-label={ariaLabel} className={cn('inline-flex items-center gap-0.5 rounded-ctl p-0.5', onDark ? 'bg-white/20 backdrop-blur' : 'bg-muted', className)}>
       {options.map((o) => (
         <button
           key={o.value}
@@ -27,7 +29,9 @@ export function Segmented<T extends string>({
           className={cn(
             'rounded-lg font-medium transition-all duration-150',
             size === 'xs' ? 'h-6 px-2 text-2xs' : 'h-7 px-2.5 text-xs',
-            o.value === value ? 'bg-surface text-ink shadow-card' : 'text-ink-3 hover:text-ink',
+            o.value === value
+              ? onDark ? 'bg-white text-[#5433E0] shadow-card' : 'bg-surface text-ink shadow-card'
+              : onDark ? 'text-white/85 hover:text-white' : 'text-ink-3 hover:text-ink',
           )}
         >
           {o.label}

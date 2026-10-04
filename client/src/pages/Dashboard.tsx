@@ -169,21 +169,38 @@ export default function Dashboard() {
       </div>
 
       <div className="space-y-5 p-4 md:p-6">
-        {/* Bộ lọc kỳ - áp dụng cho hàng KPI */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-base font-semibold text-ink">Xin chào, {firstName} 👋</h2>
-            <p className="text-xs text-ink-3">
-              {user?.role === 'staff' ? 'Số liệu bán hàng của bạn' : 'Tình hình kinh doanh'} · {new Date().toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long' })}
-            </p>
+        {/* Banner chào + bộ lọc kỳ (áp dụng cho hàng KPI) */}
+        <div className="relative overflow-hidden rounded-card bg-gradient-to-r from-primary via-[#8B5CF6] to-pink px-5 py-5 text-white shadow-card motion-safe:animate-rise md:px-6">
+          {/* Họa tiết trang trí */}
+          <div className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full bg-white/10" aria-hidden />
+          <div className="pointer-events-none absolute -bottom-20 right-40 h-40 w-40 rounded-full bg-white/10" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }} aria-hidden />
+          <div className="relative flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-medium text-white/80">
+                {new Date().toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+              </p>
+              <h2 className="mt-0.5 text-xl font-semibold">Xin chào, {firstName} 👋</h2>
+              <p className="mt-1 text-[13px] text-white/90">
+                {k ? (
+                  <>
+                    {user?.role === 'staff' ? 'Bạn đã bán' : 'Chuỗi đã bán'} <b>{num(k.orders.value)} đơn</b> · doanh thu <b>{vndCompact(k.revenue.value)}</b> trong {KPI_RANGES.find((r) => r.value === range)?.label.toLowerCase()}
+                    {k.expiring.value + k.expiring.expired > 0 && <> · <b>{k.expiring.value + k.expiring.expired} lô thuốc</b> cần xử lý hạn dùng</>}
+                  </>
+                ) : (
+                  'Đang tải số liệu…'
+                )}
+              </p>
+            </div>
+            <Segmented options={KPI_RANGES} value={range} onChange={setRange} ariaLabel="Kỳ so sánh KPI" onDark />
           </div>
-          <Segmented options={KPI_RANGES} value={range} onChange={setRange} ariaLabel="Kỳ so sánh KPI" />
         </div>
 
         {/* Hàng KPI: 1 cột (mobile) → 2x2 (tablet) → 4 cột (desktop) */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <KpiCard
             icon={<Wallet />}
+            tone="primary"
             label={user?.role === 'staff' ? 'Doanh thu của tôi' : 'Doanh thu'}
             value={k ? <CountUp value={k.revenue.value} format={vndCompact} /> : ''}
             delay={0}
@@ -194,6 +211,7 @@ export default function Dashboard() {
           />
           <KpiCard
             icon={<ShoppingBag />}
+            tone="blue"
             label="Số đơn hàng"
             value={k ? <CountUp value={k.orders.value} format={(n) => num(Math.round(n))} /> : ''}
             delay={70}
@@ -205,6 +223,7 @@ export default function Dashboard() {
           {k?.profit ? (
             <KpiCard
               icon={<TrendingUp />}
+              tone="green"
               label="Lợi nhuận gộp"
               value={<CountUp value={k.profit.value} format={vndCompact} />}
               delay={140}
@@ -216,6 +235,7 @@ export default function Dashboard() {
           ) : (
             <KpiCard
               icon={<Users />}
+              tone="green"
               label="Khách thành viên"
               value={k ? <CountUp value={k.customers.value} format={(n) => num(Math.round(n))} /> : ''}
               delay={140}
@@ -227,6 +247,7 @@ export default function Dashboard() {
           )}
           <KpiCard
             icon={<CalendarX2 />}
+            tone="orange"
             label="Thuốc sắp hết hạn"
             value={k ? <CountUp value={k.expiring.value} format={(n) => num(Math.round(n))} /> : ''}
             delay={210}

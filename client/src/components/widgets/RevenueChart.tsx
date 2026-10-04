@@ -44,7 +44,7 @@ function BarShape(props: { x?: number; y?: number; width?: number; height?: numb
   const path = `M${x},${y + height} L${x},${y + r} Q${x},${y} ${x + r},${y} L${x + width - r},${y} Q${x + width},${y} ${x + width},${y + r} L${x + width},${y + height} Z`;
   return (
     <g>
-      <path d={path} fill={strong ? 'rgb(var(--primary))' : 'rgb(var(--chart-bar))'} style={{ transition: 'fill 150ms' }} />
+      <path d={path} fill={strong ? 'url(#bar-strong)' : 'url(#bar-soft)'} />
       {!strong && <rect x={x} y={y} width={width} height={Math.min(2, height)} rx={1} fill="rgb(var(--chart-cap))" />}
     </g>
   );
@@ -160,6 +160,17 @@ export function RevenueChart({ className, delay }: { className?: string; delay?:
               onMouseMove={(s) => setActive(typeof s?.activeTooltipIndex === 'number' ? s.activeTooltipIndex : null)}
               onMouseLeave={() => setActive(null)}
             >
+              {/* Gradient cho cột: cột thường tím nhạt → trong suốt, cột nổi bật tím → hồng */}
+              <defs>
+                <linearGradient id="bar-soft" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgb(var(--chart-1))" stopOpacity={0.55} />
+                  <stop offset="100%" stopColor="rgb(var(--chart-bar))" stopOpacity={0.9} />
+                </linearGradient>
+                <linearGradient id="bar-strong" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgb(var(--pink))" />
+                  <stop offset="100%" stopColor="rgb(var(--primary))" />
+                </linearGradient>
+              </defs>
               <CartesianGrid vertical={false} stroke="rgb(var(--chart-grid))" />
               <XAxis
                 dataKey="label"

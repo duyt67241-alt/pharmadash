@@ -43,10 +43,10 @@ export function Sidebar({ collapsed, onToggle, canToggle, onNavigate }: Props) {
   const branchLabel = user.role === 'owner' ? currentBranch?.name ?? 'Tất cả chi nhánh' : user.branch_name ?? '';
 
   const quick = [
-    { label: 'Thuốc sắp hết hạn', icon: Clock3, count: counts?.expiring, to: '/inventory?tab=expiring', show: true },
-    { label: 'Sắp hết hàng', icon: PackageX, count: counts?.lowStock, to: '/inventory?tab=low', show: true },
-    { label: 'Nhà cung cấp', icon: Factory, count: counts?.suppliers, to: '/purchases?tab=suppliers', show: can.managePurchases },
-    { label: 'Phiếu nhập chờ', icon: Truck, count: counts?.pendingPurchases, to: '/purchases', show: can.managePurchases },
+    { label: 'Thuốc sắp hết hạn', icon: Clock3, color: 'text-orange', count: counts?.expiring, to: '/inventory?tab=expiring', show: true },
+    { label: 'Sắp hết hàng', icon: PackageX, color: 'text-pink', count: counts?.lowStock, to: '/inventory?tab=low', show: true },
+    { label: 'Nhà cung cấp', icon: Factory, color: 'text-blue', count: counts?.suppliers, to: '/purchases?tab=suppliers', show: can.managePurchases },
+    { label: 'Phiếu nhập chờ', icon: Truck, color: 'text-green', count: counts?.pendingPurchases, to: '/purchases', show: can.managePurchases },
   ].filter((q) => q.show);
 
   const storagePct = counts?.storage.percent ?? 0;
@@ -54,7 +54,7 @@ export function Sidebar({ collapsed, onToggle, canToggle, onNavigate }: Props) {
   const linkCls = ({ isActive }: { isActive: boolean }) =>
     cn(
       'group relative flex h-9 items-center gap-3 rounded-ctl px-3 text-[13px] font-medium transition-colors duration-150',
-      isActive ? 'bg-muted text-ink' : 'text-ink-2 hover:bg-muted/60 hover:text-ink',
+      isActive ? 'bg-primary-soft text-primary-ink' : 'text-ink-2 hover:bg-muted/60 hover:text-ink',
       collapsed && 'justify-center px-0',
     );
   // Thanh tím nhỏ bên trái cho mục đang chọn (giống ảnh tham khảo)
@@ -155,7 +155,7 @@ export function Sidebar({ collapsed, onToggle, canToggle, onNavigate }: Props) {
                 {({ isActive }) => (
                   <>
                     {activeBar(isActive)}
-                    <n.icon className={cn('h-[18px] w-[18px] shrink-0', isActive ? 'text-ink' : 'text-ink-3 group-hover:text-ink-2')} strokeWidth={1.75} />
+                    <n.icon className={cn('h-[18px] w-[18px] shrink-0', isActive ? 'text-primary' : 'text-ink-3 group-hover:text-ink-2')} strokeWidth={isActive ? 2 : 1.75} />
                     {!collapsed && <span className="truncate">{n.label}</span>}
                   </>
                 )}
@@ -194,9 +194,9 @@ export function Sidebar({ collapsed, onToggle, canToggle, onNavigate }: Props) {
                       collapsed ? 'justify-center px-0' : 'pl-5',
                     )}
                   >
-                    <q.icon className="h-4 w-4 shrink-0 text-ink-3" strokeWidth={1.75} />
+                    <q.icon className={cn('h-4 w-4 shrink-0', q.color)} strokeWidth={1.9} />
                     {!collapsed && <span className="flex-1 truncate">{q.label}</span>}
-                    {!collapsed && <span className="num text-xs text-ink-3">{q.count !== undefined ? num(q.count) : '·'}</span>}
+                    {!collapsed && <span className="num min-w-6 rounded-md bg-muted px-1.5 text-center text-2xs font-semibold text-ink-2">{q.count !== undefined ? num(q.count) : '·'}</span>}
                     {collapsed && !!q.count && <span className="absolute right-2 top-1 h-1.5 w-1.5 rounded-full bg-warning" />}
                   </NavLink>
                 </li>

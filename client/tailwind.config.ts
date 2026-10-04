@@ -30,6 +30,11 @@ export default {
         danger: { DEFAULT: token('danger'), soft: token('danger-soft') },
         warning: { DEFAULT: token('warning'), soft: token('warning-soft') },
         info: { DEFAULT: token('info'), soft: token('info-soft') },
+        // Màu nhấn phụ cho KPI / trang trí (không dùng cho trạng thái)
+        blue: { DEFAULT: token('blue'), soft: token('blue-soft') },
+        green: { DEFAULT: token('green'), soft: token('green-soft') },
+        orange: { DEFAULT: token('orange'), soft: token('orange-soft') },
+        pink: { DEFAULT: token('pink'), soft: token('pink-soft') },
         // Thang tím 4 bậc cho biểu đồ (đã kiểm tra độ tương phản sáng/tối)
         chart: {
           1: token('chart-1'),
