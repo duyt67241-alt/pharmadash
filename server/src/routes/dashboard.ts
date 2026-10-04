@@ -130,7 +130,10 @@ router.get('/revenue', (req, res) => {
 
   const total = points.reduce((s, p) => s + p.revenue, 0);
   let change: number | null = null;
-  if (prevFrom) {
+  // Chỉ so sánh khi kỳ trước nằm trọn trong khoảng có dữ liệu; nếu kỳ trước chỉ có
+  // một phần dữ liệu thì % tăng trưởng vô nghĩa (VD: +7.556%)
+  const firstOrder = get<{ t: string | null }>('SELECT MIN(created_at) t FROM orders')?.t;
+  if (prevFrom && firstOrder && fmtDateTime(prevFrom) >= firstOrder) {
     // So sánh với kỳ trước có cùng độ dài tính đến cùng thời điểm
     const prevTo = cfg.bucket === 'month' ? addMonths(now, -cfg.len) : addDays(now, -(cfg.bucket === 'hour' ? 1 : cfg.len));
     const prevRevenue = totals(req, fmtDateTime(prevFrom), fmtDateTime(prevTo)).revenue;

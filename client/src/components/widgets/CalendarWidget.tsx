@@ -23,7 +23,7 @@ const KIND: Record<string, { icon: typeof Video; cls: string; label: string }> =
 };
 
 /** Lịch dạng dải tuần (giống ảnh mẫu) + danh sách việc trong ngày đã chọn. */
-export function CalendarWidget({ className }: { className?: string }) {
+export function CalendarWidget({ className, delay }: { className?: string; delay?: number }) {
   const can = useCan();
   const today = useMemo(() => new Date(), []);
   const [selected, setSelected] = useState(() => new Date());
@@ -41,7 +41,7 @@ export function CalendarWidget({ className }: { className?: string }) {
   const title = selected.toLocaleDateString('vi-VN', { month: 'long', year: 'numeric' });
 
   return (
-    <ChartCard className={className} title="Lịch làm việc" moreLink={can.viewStaff ? '/staff' : undefined} moreLabel="Xem lịch ca" bodyClassName="flex flex-col">
+    <ChartCard className={className} delay={delay} title="Lịch làm việc" moreLink={can.viewStaff ? '/staff' : undefined} moreLabel="Xem lịch ca" bodyClassName="flex flex-col">
       <div className="flex items-center justify-between">
         <button onClick={() => setSelected(addDays(selected, -7))} className="rounded-md p-1 text-ink-3 hover:bg-muted hover:text-ink" aria-label="Tuần trước">
           <ChevronLeft className="h-4 w-4" />

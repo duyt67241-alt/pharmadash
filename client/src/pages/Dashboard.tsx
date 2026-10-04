@@ -20,6 +20,7 @@ import { RevenueChart } from '../components/widgets/RevenueChart';
 import { CalendarWidget } from '../components/widgets/CalendarWidget';
 import { CategoryRevenueCard, RetentionCard, StockAlerts, TopMedicines } from '../components/widgets/BottomWidgets';
 import { ImportMedicinesModal } from '../components/widgets/ImportMedicinesModal';
+import { CountUp } from '../components/ui/CountUp';
 
 type KpiRange = 'day' | 'week' | 'month';
 const KPI_RANGES: { value: KpiRange; label: string }[] = [
@@ -184,7 +185,8 @@ export default function Dashboard() {
           <KpiCard
             icon={<Wallet />}
             label={user?.role === 'staff' ? 'Doanh thu của tôi' : 'Doanh thu'}
-            value={k ? vndCompact(k.revenue.value) : ''}
+            value={k ? <CountUp value={k.revenue.value} format={vndCompact} /> : ''}
+            delay={0}
             change={k?.revenue.change}
             caption={CAPTION[range]}
             info={`Tổng tiền các đơn đã hoàn tất (sau chiết khấu): ${k ? vnd(k.revenue.value) : ''}`}
@@ -193,7 +195,8 @@ export default function Dashboard() {
           <KpiCard
             icon={<ShoppingBag />}
             label="Số đơn hàng"
-            value={k ? num(k.orders.value) : ''}
+            value={k ? <CountUp value={k.orders.value} format={(n) => num(Math.round(n))} /> : ''}
+            delay={70}
             change={k?.orders.change}
             caption={CAPTION[range]}
             info="Số hóa đơn bán hàng đã hoàn tất trong kỳ (không tính đơn hoàn trả)."
@@ -203,7 +206,8 @@ export default function Dashboard() {
             <KpiCard
               icon={<TrendingUp />}
               label="Lợi nhuận gộp"
-              value={vndCompact(k.profit.value)}
+              value={<CountUp value={k.profit.value} format={vndCompact} />}
+              delay={140}
               change={k.profit.change}
               caption={`Biên LN ${pct(k.profit.margin)}`}
               info="Doanh thu trừ giá vốn hàng bán (giá nhập tại thời điểm bán)."
@@ -213,7 +217,8 @@ export default function Dashboard() {
             <KpiCard
               icon={<Users />}
               label="Khách thành viên"
-              value={k ? num(k.customers.value) : ''}
+              value={k ? <CountUp value={k.customers.value} format={(n) => num(Math.round(n))} /> : ''}
+              delay={140}
               change={k?.customers.change}
               caption={CAPTION[range]}
               info="Số khách hàng thành viên đã mua trong kỳ."
@@ -223,7 +228,8 @@ export default function Dashboard() {
           <KpiCard
             icon={<CalendarX2 />}
             label="Thuốc sắp hết hạn"
-            value={k ? num(k.expiring.value) : ''}
+            value={k ? <CountUp value={k.expiring.value} format={(n) => num(Math.round(n))} /> : ''}
+            delay={210}
             caption="lô trong 30 ngày tới"
             info="Số lô thuốc còn tồn sẽ hết hạn trong 30 ngày tới. Nhãn đỏ là số lô đã quá hạn cần tiêu hủy."
             loading={isLoading}
@@ -238,18 +244,18 @@ export default function Dashboard() {
         {/* Hàng giữa: biểu đồ 2/3 + lịch 1/3 */}
         {(show('revenue') || show('calendar')) && (
           <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
-            {show('revenue') && <RevenueChart className={show('calendar') ? 'xl:col-span-2' : 'xl:col-span-3'} />}
-            {show('calendar') && <CalendarWidget className={!show('revenue') ? 'xl:col-span-3' : undefined} />}
+            {show('revenue') && <RevenueChart delay={280} className={show('calendar') ? 'xl:col-span-2' : 'xl:col-span-3'} />}
+            {show('calendar') && <CalendarWidget delay={350} className={!show('revenue') ? 'xl:col-span-3' : undefined} />}
           </div>
         )}
 
         {/* Hàng dưới: 2–4 card nhỏ */}
         {bottom.length > 0 && (
           <div className={cn('grid grid-cols-1 gap-4 md:grid-cols-2', bottom.length >= 4 ? '2xl:grid-cols-4' : bottom.length === 3 ? 'xl:grid-cols-3' : '')}>
-            {show('top') && <TopMedicines />}
-            {show('alerts') && <StockAlerts />}
-            {show('category') && <CategoryRevenueCard />}
-            {show('retention') && <RetentionCard />}
+            {show('top') && <TopMedicines delay={420} />}
+            {show('alerts') && <StockAlerts delay={490} />}
+            {show('category') && <CategoryRevenueCard delay={560} />}
+            {show('retention') && <RetentionCard delay={630} />}
           </div>
         )}
       </div>

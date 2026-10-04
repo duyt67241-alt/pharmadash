@@ -15,6 +15,9 @@ import { Badge, StatBadge, type Tone } from '../ui/Badge';
 import { Skeleton } from '../ui/Skeleton';
 import { EmptyState, ProgressBar } from '../ui/Misc';
 import { Modal } from '../ui/Modal';
+import { CountUp } from '../ui/CountUp';
+
+const reduceMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 const rowsSkeleton = (n: number, h = 'h-9') => (
   <div className="space-y-2.5">
@@ -25,7 +28,7 @@ const rowsSkeleton = (n: number, h = 'h-9') => (
 );
 
 // ---------------- Top thuốc bán chạy ----------------
-export function TopMedicines({ className }: { className?: string }) {
+export function TopMedicines({ className, delay }: { className?: string; delay?: number }) {
   const [showAll, setShowAll] = useState(false);
   const { data, isLoading } = useGet<TopMedicine[]>('/dashboard/top-medicines', { limit: 10 }, { refetchInterval: LIVE_REFETCH_MS });
 
@@ -52,6 +55,7 @@ export function TopMedicines({ className }: { className?: string }) {
   return (
     <ChartCard
       className={className}
+      delay={delay}
       title="Top thuốc bán chạy"
       subtitle={<span className="text-xs text-ink-3">Theo doanh thu 30 ngày gần nhất</span>}
       menu={[{ label: 'Xem top 10', icon: <ListOrdered />, onClick: () => setShowAll(true) }]}
@@ -75,7 +79,7 @@ export const ALERT_META: Record<AlertKind, { label: string; tone: Tone }> = {
   exp90: { label: '≤ 90 ngày', tone: 'neutral' },
 };
 
-export function StockAlerts({ className }: { className?: string }) {
+export function StockAlerts({ className, delay }: { className?: string; delay?: number }) {
   const nav = useNavigate();
   const { data, isLoading } = useGet<AlertSummary>('/inventory/alert-summary', { limit: 5 }, { refetchInterval: 60_000 });
   const c = data?.counts;
@@ -89,6 +93,7 @@ export function StockAlerts({ className }: { className?: string }) {
   return (
     <ChartCard
       className={className}
+      delay={delay}
       title="Cảnh báo tồn kho"
       subtitle={<span className="text-xs text-ink-3">Hạn dùng trong 90 ngày & dưới mức tối thiểu</span>}
       menu={[
@@ -137,7 +142,7 @@ export function StockAlerts({ className }: { className?: string }) {
 
 // ---------------- Doanh thu theo nhóm thuốc ----------------
 /** Thanh ngang xếp hạng (1 sắc tím) thay cho donut 12 màu - so sánh các nhóm dễ hơn. */
-export function CategoryRevenueCard({ className }: { className?: string }) {
+export function CategoryRevenueCard({ className, delay }: { className?: string; delay?: number }) {
   const { data, isLoading } = useGet<CategoryRevenue>('/dashboard/category-revenue', undefined, { refetchInterval: LIVE_REFETCH_MS });
   const [expanded, setExpanded] = useState(false);
   const items = data?.items ?? [];
@@ -148,6 +153,7 @@ export function CategoryRevenueCard({ className }: { className?: string }) {
   return (
     <ChartCard
       className={className}
+      delay={delay}
       title="Doanh thu theo nhóm thuốc"
       subtitle={
         isLoading ? <Skeleton className="h-4 w-32" /> : (
@@ -171,7 +177,7 @@ export function CategoryRevenueCard({ className }: { className?: string }) {
                 </span>
               </div>
               <div className="mt-1 h-2 w-full rounded-full bg-muted" title={vnd(c.revenue)}>
-                <div className="h-full rounded-full bg-primary/80 transition-all group-hover:bg-primary" style={{ width: `${(c.revenue / max) * 100}%` }} />
+                <div className="h-full origin-left rounded-full bg-primary/80 transition-all group-hover:bg-primary motion-safe:animate-grow-x" style={{ width: `${(c.revenue / max) * 100}%` }} />
               </div>
             </li>
           ))}
@@ -215,7 +221,7 @@ function RetentionTooltip({ active, payload }: TooltipProps<number, string>) {
   );
 }
 
-export function RetentionCard({ className }: { className?: string }) {
+export function RetentionCard({ className, delay }: { className?: string; delay?: number }) {
   const { data, isLoading } = useGet<Retention>('/dashboard/retention', undefined, { refetchInterval: 5 * 60_000 });
   const [active, setActive] = useState<number | null>(null);
   const n = data?.months.length ?? 0;
@@ -223,11 +229,12 @@ export function RetentionCard({ className }: { className?: string }) {
   return (
     <ChartCard
       className={className}
+      delay={delay}
       title="Tỷ lệ khách quay lại"
       subtitle={
         isLoading ? <Skeleton className="h-7 w-36" /> : (
           <div className="flex items-baseline gap-2">
-            <span className="text-[22px] font-semibold tracking-tight text-ink">{pct(data?.rate)}</span>
+            <span className="text-[22px] font-semibold tracking-tight text-ink"><CountUp value={data?.rate ?? 0} format={(n) => pct(n)} /></span>
             <StatBadge value={data?.change} />
             <span className="text-xs text-ink-3">so với tháng trước</span>
           </div>
@@ -271,7 +278,9 @@ export function RetentionCard({ className }: { className?: string }) {
                   stroke="rgb(var(--surface))"
                   strokeWidth={2}
                   radius={i === SEGMENTS.length - 1 ? [4, 4, 0, 0] : 0}
-                  isAnimationActive={false}
+                  isAnimationActive={!reduceMotion}
+                  animationBegin={(delay ?? 0) + i * 120}
+                  animationDuration={700}
                 />
               ))}
             </BarChart>

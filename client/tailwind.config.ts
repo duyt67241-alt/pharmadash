@@ -66,8 +66,14 @@ export default {
         shimmer: { '100%': { transform: 'translateX(100%)' } },
         'fade-in': { from: { opacity: '0', transform: 'translateY(4px)' }, to: { opacity: '1', transform: 'none' } },
         'slide-in': { from: { transform: 'translateX(100%)' }, to: { transform: 'none' } },
+        // Card trượt lên + hiện dần khi vào trang
+        rise: { from: { opacity: '0', transform: 'translateY(14px)' }, to: { opacity: '1', transform: 'none' } },
+        // Thanh tiến độ chạy dài ra từ trái sang
+        'grow-x': { from: { transform: 'scaleX(0)' }, to: { transform: 'scaleX(1)' } },
       },
       animation: {
+        rise: 'rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both',
+        'grow-x': 'grow-x 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both',
         shimmer: 'shimmer 1.4s infinite',
         'fade-in': 'fade-in 180ms ease-out',
         'slide-in': 'slide-in 200ms ease-out',

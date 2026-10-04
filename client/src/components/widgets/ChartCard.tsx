@@ -15,7 +15,7 @@ export interface CardAction {
  * link "Xem thêm" ở chân card.
  */
 export function ChartCard({
-  title, subtitle, actions, menu, moreLink, moreLabel = 'Xem thêm', children, className, bodyClassName,
+  title, subtitle, actions, menu, moreLink, moreLabel = 'Xem thêm', children, className, bodyClassName, delay,
 }: {
   title: ReactNode;
   subtitle?: ReactNode;
@@ -26,9 +26,11 @@ export function ChartCard({
   children: ReactNode;
   className?: string;
   bodyClassName?: string;
+  /** Độ trễ hiệu ứng xuất hiện (ms); không truyền thì không có hiệu ứng */
+  delay?: number;
 }) {
   return (
-    <section className={cn('card flex min-w-0 flex-col', className)}>
+    <section className={cn('card flex min-w-0 flex-col', delay !== undefined && 'motion-safe:animate-rise', className)} style={delay !== undefined ? { animationDelay: `${delay}ms` } : undefined}>
       <header className="flex items-start justify-between gap-3 px-5 pt-4">
         <div className="min-w-0">
           <h2 className="text-[13px] font-semibold text-ink">{title}</h2>

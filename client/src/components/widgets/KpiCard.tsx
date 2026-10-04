@@ -14,15 +14,17 @@ interface Props {
   info: string;
   loading?: boolean;
   extra?: ReactNode;
+  /** Độ trễ hiệu ứng xuất hiện (ms) để các thẻ hiện lần lượt */
+  delay?: number;
 }
 
 /**
  * Thẻ KPI: icon tròn + nhãn + (i) · số lớn · huy hiệu % · "so với kỳ trước".
  * Bám bố cục ảnh tham khảo.
  */
-export function KpiCard({ icon, label, value, change, inverse, caption, info, loading, extra }: Props) {
+export function KpiCard({ icon, label, value, change, inverse, caption, info, loading, extra, delay = 0 }: Props) {
   return (
-    <div className="card flex flex-col gap-4 p-4 transition-colors hover:border-line-strong">
+    <div className="card flex flex-col gap-4 p-4 transition-[border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-pop motion-safe:animate-rise" style={{ animationDelay: `${delay}ms` }}>
       <div className="flex items-center gap-2.5">
         <span className="flex h-8 w-8 items-center justify-center rounded-full border border-line bg-surface-2 text-ink [&>svg]:h-4 [&>svg]:w-4">
           {icon}

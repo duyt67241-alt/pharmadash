@@ -7,6 +7,7 @@ import { axisVnd, niceTicks, num, vnd } from '../../lib/format';
 import { cn } from '../../lib/cn';
 import { ChartCard } from './ChartCard';
 import { Segmented } from '../ui/Segmented';
+import { CountUp } from '../ui/CountUp';
 import { StatBadge } from '../ui/Badge';
 import { Skeleton } from '../ui/Skeleton';
 import { Dropdown, MenuItem } from '../ui/Dropdown';
@@ -31,6 +32,8 @@ const RANGE_CAPTION: Record<Range, string> = {
   all: 'toàn bộ thời gian',
 };
 const METRIC_LABEL: Record<Metric, string> = { revenue: 'Doanh thu', orders: 'Số đơn hàng' };
+
+const reduceMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 /** Cột: nền tím nhạt + nắp tím 2px; cột đang hover/kỳ hiện tại tô tím đậm. Bo 4px ở đỉnh, vuông ở đáy. */
 function BarShape(props: { x?: number; y?: number; width?: number; height?: number; index?: number; payload?: RevenuePoint; active: number | null }) {
@@ -61,7 +64,7 @@ function ChartTooltip({ active, payload, metric }: TooltipProps<number, string> 
   );
 }
 
-export function RevenueChart({ className }: { className?: string }) {
+export function RevenueChart({ className, delay }: { className?: string; delay?: number }) {
   const [range, setRange] = useState<Range>('1y');
   const [metric, setMetric] = useState<Metric>('revenue');
   const [asTable, setAsTable] = useState(false);
@@ -86,6 +89,7 @@ export function RevenueChart({ className }: { className?: string }) {
   return (
     <ChartCard
       className={className}
+      delay={delay}
       title={
         <Dropdown
           align="left"
@@ -111,7 +115,7 @@ export function RevenueChart({ className }: { className?: string }) {
           <Skeleton className="h-7 w-44" />
         ) : (
           <div className="flex flex-wrap items-baseline gap-2">
-            <span className="text-[22px] font-semibold tracking-tight text-ink">{metric === 'revenue' ? vnd(total) : `${num(total)} đơn`}</span>
+            <span className="text-[22px] font-semibold tracking-tight text-ink"><CountUp value={total} format={metric === 'revenue' ? vnd : (n) => `${num(Math.round(n))} đơn`} /></span>
             {metric === 'revenue' && <StatBadge value={data?.change} />}
             <span className="text-xs text-ink-3">{RANGE_CAPTION[range]}</span>
           </div>
@@ -180,7 +184,11 @@ export function RevenueChart({ className }: { className?: string }) {
                 dataKey={metric}
                 maxBarSize={24}
                 shape={(p: unknown) => <BarShape {...(p as object)} active={active} />}
-                isAnimationActive={false}
+                // Cột mọc dần từ đáy lên khi tải / đổi khoảng thời gian
+                isAnimationActive={!reduceMotion}
+                animationBegin={delay ?? 0}
+                animationDuration={900}
+                animationEasing="ease-out"
               />
             </BarChart>
           </ResponsiveContainer>
