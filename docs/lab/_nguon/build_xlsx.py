@@ -75,6 +75,7 @@ rows = [
     ('PERT', 'Ước lượng 3 điểm TE = (O + 4M + P)/6, ES/EF/LS/LF, Slack, đường găng, độ lệch chuẩn, xác suất kịp hạn. '
              'Cột "TE theo AI" để nhóm nhập kết quả Claude trả lời và so sánh.'),
     ('Gantt', 'Biểu đồ Gantt tự vẽ từ ES/EF (đỏ = hoạt động găng, xanh = không găng, cột cam = hạn chót).'),
+    ('NenLich', 'Kịch bản nén lịch (fast-tracking + giảm phạm vi) – lịch mới, đường găng mới, xác suất kịp hạn.'),
     ('RuiRo', 'Sổ đăng ký rủi ro (Risk Register), sắp theo điểm giảm dần. 2 dòng cuối để nhóm tự bổ sung.'),
     ('MaTran', 'Ma trận xác suất × tác động 5×5, tự điền mã rủi ro theo sheet RuiRo.'),
     ('', ''),
@@ -295,6 +296,76 @@ ws.conditional_formatting.add(rng, FormulaRule(formula=['F6=1'], fill=PatternFil
 ws.conditional_formatting.add(f'F4:{L(5 + NDAYS)}5', FormulaRule(formula=['F$5=PERT!$C$5'], fill=PatternFill('solid', start_color='F5A623', end_color='F5A623')))
 ws.conditional_formatting.add(rng, FormulaRule(formula=['F$5=PERT!$C$5'], fill=PatternFill('solid', start_color='FDE7C2', end_color='FDE7C2')))
 ws.freeze_panes = 'F6'
+
+# ============================ NÉN LỊCH (kịch bản) ============================
+ws = wb.create_sheet('NenLich')
+ws['A1'] = 'PHƯƠNG ÁN NÉN LỊCH – fast-tracking + giảm phạm vi (AI đề xuất, nhóm xác nhận)'
+ws['A1'].font = TITLE
+ws['A2'] = ('Cột "Chồng lấn" = số ngày hoạt động được bắt đầu SỚM trước khi các hoạt động trước kết thúc (fast-tracking). '
+            'ES = MAX(0; MAX(EF hoạt động trước) − Chồng lấn); LF = MIN(LS hoạt động sau + Chồng lấn của hoạt động sau). Sheet PERT giữ nguyên làm lịch gốc.')
+ws['A2'].font = BLACK
+ws['A2'].alignment = WRAP
+ws.merge_cells('A2:P2')
+ws.row_dimensions[2].height = 30
+cols = ['Mã', 'Hoạt động', 'Trước', 'O', 'M', 'P', 'Chồng lấn', 'TE', 'σ²', 'ES', 'EF', 'LS', 'LF', 'Slack', 'Găng?', 'Thay đổi so với lịch gốc']
+header(ws, 4, cols, [6, 36, 12, 6, 6, 6, 9, 8, 8, 8, 8, 8, 8, 8, 8, 70])
+ws.row_dimensions[4].height = 30
+from lab_data import SCENARIO
+n0 = 5
+nrow = {a['id']: n0 + i for i, a in enumerate(ACTIVITIES)}
+nlast = n0 + len(ACTIVITIES) - 1
+NT = '$C$' + str(nlast + 3)
+for a in ACTIVITIES:
+    r = nrow[a['id']]
+    sc = SCENARIO.get(a['id'], {})
+    changed = PatternFill('solid', fgColor='FFF2CC')
+    cell(ws, f'A{r}', a['id'], BOLD, align=CENTER)
+    cell(ws, f'B{r}', f'=PERT!B{row_of[a["id"]]}', align=WRAP)
+    cell(ws, f'C{r}', ', '.join(a['pred']) or '—', align=CENTER)
+    for col, key in (('D', 'o'), ('E', 'm'), ('F', 'p')):
+        if key in sc:
+            cell(ws, f'{col}{r}', sc[key], BLUE, '0', fill=changed)
+        else:
+            cell(ws, f'{col}{r}', f'=PERT!{ {"o": "E", "m": "F", "p": "G"}[key] }{row_of[a["id"]]}', Font(name=F, size=10, color='008000'), '0')
+    cell(ws, f'G{r}', sc.get('ov', 0), BLUE, '0.0', fill=changed if 'ov' in sc else None)
+    cell(ws, f'H{r}', f'=(D{r}+4*E{r}+F{r})/6', BLACK, '0.00')
+    cell(ws, f'I{r}', f'=((F{r}-D{r})/6)^2', BLACK, '0.00')
+    es = '0' if not a['pred'] else f'MAX(0,MAX(' + ','.join(f'K{nrow[p]}' for p in a['pred']) + f')-G{r})'
+    cell(ws, f'J{r}', '=' + es, BLACK, '0.00')
+    cell(ws, f'K{r}', f'=J{r}+H{r}', BLACK, '0.00')
+    cell(ws, f'L{r}', f'=M{r}-H{r}', BLACK, '0.00')
+    lf = NT if not succ[a['id']] else 'MIN(' + ','.join(f'L{nrow[s]}+G{nrow[s]}' for s in succ[a['id']]) + ')'
+    cell(ws, f'M{r}', '=' + lf, BLACK, '0.00')
+    cell(ws, f'N{r}', f'=L{r}-J{r}', BLACK, '0.00')
+    cell(ws, f'O{r}', f'=IF(ABS(N{r})<0.005,"Găng","")', BOLD, align=CENTER)
+    cell(ws, f'P{r}', sc.get('note', ''), align=WRAP)
+ws.conditional_formatting.add(f'A{n0}:O{nlast}', FormulaRule(formula=[f'$O{n0}="Găng"'], fill=PatternFill('solid', start_color='FCE4E4', end_color='FCE4E4')))
+s2 = nlast + 2
+ws[f'A{s2}'] = 'KẾT QUẢ SAU KHI NÉN'
+ws[f'A{s2}'].font = TITLE
+res = [
+    ('Thời gian dự án T mới (ngày làm việc)', f'=MAX(K{n0}:K{nlast})', '0.00'),
+    ('Đường găng mới', None, None),
+    ('Độ lệch chuẩn đường găng σ', f'=SQRT(SUMIF(O{n0}:O{nlast},"Găng",I{n0}:I{nlast}))', '0.00'),
+    ('Số ngày làm việc tới hạn chót', '=PERT!C5', '0'),
+    ('Dự trữ so với hạn chót (ngày)', f'=C{s2+4}-C{s2+1}', '0.00'),
+    ('Xác suất kịp hạn P(Z)', f'=NORMSDIST((C{s2+4}-C{s2+1})/C{s2+3})', '0.0%'),
+    ('Ngày kết thúc dự kiến', f'=WORKDAY(PERT!C3,ROUNDUP(C{s2+1},0)-1)', 'dd/mm/yyyy'),
+    ('T lịch gốc (sheet PERT) / số ngày rút ngắn', f'={PERT_T}', '0.00'),
+]
+for i, (label, formula, fmt) in enumerate(res, 1):
+    rr = s2 + i
+    ws.merge_cells(f'A{rr}:B{rr}')
+    cell(ws, f'A{rr}', label, BOLD)
+    ws[f'B{rr}'].border = BORDER
+    if label == 'Đường găng mới':
+        expr = '&'.join(f'IF(O{nrow[a["id"]]}="Găng","{a["id"]} → ","")' for a in ACTIVITIES)
+        cell(ws, f'C{rr}', f'=LEFT({expr},LEN({expr})-3)', BOLD)
+        ws.merge_cells(f'C{rr}:J{rr}')
+    else:
+        cell(ws, f'C{rr}', formula, BOLD, fmt)
+cell(ws, f'D{s2+8}', f'=C{s2+8}-C{s2+1}', BOLD, '0.00')
+ws.freeze_panes = 'C5'
 
 # ============================ RỦI RO ============================
 ws = wb.create_sheet('RuiRo')

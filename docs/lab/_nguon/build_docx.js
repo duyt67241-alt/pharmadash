@@ -145,6 +145,7 @@ const knowledge = new Document({
 // 2) BÁO CÁO LAB
 // ======================================================================
 const A = D.activities;
+const SC = D.scenario;
 const crit = D.crit.join(' → ');
 const INSTRUCTIONS = [
   '# VAI TRÒ',
@@ -251,14 +252,31 @@ const part2 = [
     ['4', 'Hoàn thành dự án trong ngân sách 250 triệu đồng và đào tạo 100% người dùng (chủ, 2 quản lý, nhân viên).', 'Tại thời điểm nghiệm thu'],
   ]),
   P([{ t: 'Ghi chú: ', bold: true }, { t: 'yêu cầu khách hàng dùng cụm từ “gần như thời gian thực”; con số “15 phút” ở mục tiêu 1 là giả định, cần xác nhận lại với khách hàng (câu hỏi Q2).', italics: true }], { size: 19 }),
-  TODO('Nhóm kiểm tra từng mục tiêu có thật sự SMART và viết lại ít nhất 2 mục tiêu theo ý nhóm (ghi rõ lý do sửa)'),
+  H3('Rà soát SMART và viết lại'),
+  T([500, 3000, 6138], [
+    ['#', 'Điểm chưa đạt SMART', 'Mục tiêu viết lại'],
+    ['1', 'M: con số “15 phút” là giả định, tài liệu chỉ ghi “gần như thời gian thực”.\nS: “vận hành” chưa nói rõ chức năng nào, cho ai.',
+      'Đến 31/12/2026, 100% người dùng của 2 chi nhánh (chủ, 2 quản lý, nhân viên) sử dụng được các chức năng bắt buộc FR01–FR08; dữ liệu bán hàng trên PharmaDash trễ không quá ngưỡng thống nhất với khách hàng ở câu hỏi Q2 (đề xuất ≤ 15 phút), đo trong tuần UAT.'],
+    ['2', 'A/R: kết quả “giảm 50% thuốc hủy” phụ thuộc cả việc nhân viên xử lý cảnh báo, chỉ đo được sau khi dự án kết thúc – đây là lợi ích kinh doanh, không phải mục tiêu dự án.\nM: tài liệu chỉ có số liệu cả năm 2025, không có số liệu quý.',
+      'Mục tiêu dự án: trước go-live, hệ thống cảnh báo đúng 100% lô thuốc có hạn dùng ≤ 90 ngày trong dữ liệu đã chuyển đổi (đối soát với file kiểm kê).\nChỉ tiêu lợi ích (chuyển sang mục 2.8): giá trị thuốc hết hạn phải hủy năm 2027 ≤ 22,5 triệu đồng (giảm 50% so với 45 triệu năm 2025).'],
+    ['4', 'S: gộp 2 mục tiêu khác nhau (ngân sách và đào tạo).\nM: “đào tạo 100%” chưa có cách đo.',
+      '4a. Tổng chi phí thực tế khi nghiệm thu ≤ 250 triệu đồng; chênh lệch so với dự toán theo dõi hằng tuần không vượt ±10%.\n4b. Trước 31/12/2026, toàn bộ người dùng (chủ, 2 quản lý, nhân viên) hoàn thành buổi đào tạo và tự thực hiện đúng 5 thao tác cơ bản (xem KPI, tra tồn kho theo lô, xem cảnh báo, lọc đơn, xuất báo cáo).'],
+  ], { size: 18 }),
+  P('Mục tiêu 3 giữ nguyên: đã có số liệu gốc trong tài liệu (khoảng 1 ngày), con số đích (dưới 10 phút) và thời hạn.', { italics: true, size: 19 }),
   H2('2.2 Phạm vi'),
   T([4819, 4819], [
     ['Trong phạm vi (In scope)', 'Ngoài phạm vi (Out of scope)'],
     ['• Dashboard tổng quan: KPI, biểu đồ doanh thu, top thuốc, doanh thu theo nhóm (FR01–FR02)\n• Tồn kho theo lô, cảnh báo hạn dùng / hết hàng (FR03–FR04)\n• Tra cứu hóa đơn, lọc theo ngày / nhân viên / thanh toán (FR05)\n• Nhập hàng, nhà cung cấp (FR06)\n• Báo cáo Excel/CSV, PDF (FR07)\n• Phân quyền 3 vai trò (FR08)\n• Khách hàng thân thiết, doanh số và ca nhân viên (FR09–FR10)\n• Đồng bộ dữ liệu từ phần mềm bán hàng, chuyển đổi dữ liệu cũ\n• Đào tạo người dùng, hỗ trợ 2 tuần sau go-live',
-     '• Thay thế phần mềm bán hàng tại quầy (POS)\n• Ứng dụng di động riêng, đặt hàng tự động với NCC (FR12 – giai đoạn sau)\n• Tích hợp phần mềm kế toán, hóa đơn điện tử\n• Bán hàng online / website thương mại điện tử\n• Bảo trì dài hạn sau 2 tuần hỗ trợ\n• FR11 (lịch chung, giao diện tối) chỉ làm nếu còn thời gian'],
+     '• Thay thế phần mềm bán hàng tại quầy (POS)\n• Ứng dụng di động riêng, đặt hàng tự động với NCC (FR12 – giai đoạn sau)\n• Tích hợp phần mềm kế toán, hóa đơn điện tử (chờ khách trả lời Q9)\n• Bảo trì dài hạn sau 2 tuần hỗ trợ\n• FR11 (lịch chung, giao diện tối) chỉ làm nếu còn thời gian'],
   ]),
-  TODO('Đối chiếu “ngoài phạm vi” với tài liệu yêu cầu – AI có thêm hoặc bỏ sót mục nào không có trong tài liệu?'),
+  H3('Đối chiếu phạm vi với tài liệu yêu cầu'),
+  ...bullets([
+    'Bản nháp AI tự thêm mục “bán hàng online / website thương mại điện tử” vào ngoài phạm vi dù tài liệu không hề nhắc tới → đã bỏ, vì liệt kê thứ khách hàng không yêu cầu chỉ gây nhiễu.',
+    '“Tích hợp phần mềm kế toán, hóa đơn điện tử” cũng không có trong tài liệu → giữ ở ngoài phạm vi nhưng ghi chú chờ khách trả lời Q9, vì đây là nhu cầu phổ biến của nhà thuốc.',
+    '“Hỗ trợ 2 tuần sau go-live” là giả định của bản nháp, tài liệu không quy định → cần xác nhận với khách hàng khi duyệt Charter.',
+    'Yêu cầu phi chức năng “sao lưu hằng ngày, sẵn sàng 7h–22h” chưa xuất hiện trong phạm vi → đã có ở gói WBS 7.1.1 và tiêu chí nghiệm thu nên giữ nguyên.',
+    'Không có yêu cầu nào trong tài liệu (FR01–FR12) bị bỏ sót.',
+  ], { size: 20 }),
   H2('2.3 Sản phẩm bàn giao chính'),
   ...bullets(['Hệ thống web PharmaDash chạy trên máy chủ, có dữ liệu thật của 2 chi nhánh', 'Mã nguồn và tài liệu kỹ thuật (kiến trúc, CSDL, API)', 'Tài liệu SRS, kế hoạch và kết quả kiểm thử, biên bản UAT', 'Hướng dẫn sử dụng theo vai trò; 2 buổi đào tạo']),
   H2('2.4 Các bên liên quan'),
@@ -283,7 +301,7 @@ const part2 = [
     ['Demo 3 / M3', 'UAT và nghiệm thu', '23/12/2026', A.find((a) => a.id === 'N').end],
     ['M4', 'Go-live, đào tạo xong', '31/12/2026', D.end],
   ]),
-  P([{ t: 'Nhận xét: ', bold: true }, { t: `lịch PERT gốc (mục 4) kết thúc ngày ${D.end}, trễ ${fmt(D.T - 64)} ngày làm việc so với mục tiêu – bắt buộc phải nén lịch hoặc giảm phạm vi để đạt các mốc trên.` }], { size: 19 }),
+  P([{ t: 'Nhận xét: ', bold: true }, { t: `lịch PERT gốc (mục 4) kết thúc ngày ${D.end}, trễ ${fmt(D.T - 64)} ngày làm việc so với mục tiêu. Sau khi nén lịch (mục 4.5), ngày kết thúc dự kiến là ${SC.end}, kịp hạn 31/12/2026.` }], { size: 19 }),
   H2('2.6 Giả định và ràng buộc'),
   T([4819, 4819], [
     ['Giả định (Assumptions)', 'Ràng buộc (Constraints)'],
@@ -298,6 +316,7 @@ const part2 = [
     '100% test case mức ưu tiên Cao đạt trong UAT; không còn lỗi nghiêm trọng',
     'Chênh lệch tồn kho giữa hệ thống và kiểm kê thực tế < 1% số mặt hàng',
     '100% người dùng được đào tạo; khảo sát hài lòng sau 1 tháng ≥ 4/5',
+    'Chỉ tiêu lợi ích (đo sau dự án): giá trị thuốc hết hạn phải hủy năm 2027 ≤ 22,5 triệu đồng (giảm 50% so với năm 2025)',
   ]),
   H2('2.9 Thông tin còn thiếu – câu hỏi làm rõ với khách hàng'),
   T([700, 5638, 3300], [
@@ -312,7 +331,13 @@ const part2 = [
     ['Q8', 'Ai là người ký nghiệm thu? Tiêu chí nghiệm thu cụ thể là gì?', 'Kết thúc dự án'],
     ['Q9', 'Có cần kết nối phần mềm kế toán hoặc hóa đơn điện tử không?', 'Phạm vi (hiện để ngoài phạm vi)'],
   ]),
-  TODO('Chọn 3 câu hỏi quan trọng nhất và giải thích vì sao'),
+  H3('3 câu hỏi quan trọng nhất'),
+  T([700, 8938], [
+    ['#', 'Lý do ưu tiên'],
+    ['Q1', 'Quyết định khả thi của cả dự án: nếu phần mềm bán hàng không cho lấy dữ liệu, dashboard không có số liệu thật. Liên quan trực tiếp rủi ro R01 (điểm cao nhất 20) và gói 4.4.1 (60 giờ). Câu trả lời có thể đổi kiến trúc (API tự động hay nhập file theo ca).'],
+    ['Q2', 'Không có câu trả lời thì mục tiêu SMART số 1 không đo được và không nghiệm thu được. Ngưỡng trễ cũng quyết định cách thiết kế đồng bộ: vài phút thì phải đồng bộ liên tục, cuối ca thì nhập file là đủ – chênh lệch đáng kể về giờ công.'],
+    ['Q4', 'Giá trị cốt lõi của hệ thống là cảnh báo hạn dùng theo lô. Nếu dữ liệu cũ thiếu số lô, hạn dùng thì cảnh báo sai ngay từ ngày đầu (rủi ro R04). Cần biết sớm để lập kế hoạch làm sạch dữ liệu và xác định ai chịu trách nhiệm xác nhận số liệu.'],
+  ], { size: 19 }),
 ];
 
 const dict = [
@@ -324,8 +349,14 @@ const part3 = [
   br(),
   H1('3. Phạm vi và WBS'),
   P(`WBS theo hướng sản phẩm bàn giao, 3 cấp, gồm 7 hạng mục cấp 1, ${wpCount} gói công việc (work package). Tổng ${totalHours.toLocaleString('vi-VN')} giờ công. Kiểm tra trong file Excel (sheet WBS): tổng giờ cấp 1 = tổng giờ các gói (quy tắc 100%), không gói nào vi phạm quy tắc 8/80 (mọi gói từ 8 đến 80 giờ). WBS đã có đủ các hạng mục quản lý dự án (1.0), kiểm thử (6.0), triển khai và đào tạo (7.0).`),
+];
+// Sơ đồ cây đặt ở trang ngang để đọc được đủ 3 cấp
+const part3tree = [
   H2('3.1 Sơ đồ cây WBS'),
-  TODO('Chèn sơ đồ cây WBS do nhóm tự vẽ (draw.io / Word SmartArt / giấy) – theo yêu cầu bài lab, không chỉ dán bảng của AI'),
+  img('wbs_tree.png', 960, 357),
+  caption('Hình 3.1 – Sơ đồ cây WBS 3 cấp (cấp 1 nằm ngang; cấp 2, cấp 3 xếp dọc dưới mỗi nhánh; h = giờ công)'),
+];
+const part3b = [
   H2('3.2 Bảng WBS'),
   T([700, 3538, 3200, 700, 1500], [['Mã WBS', 'Tên hạng mục / gói công việc', 'Sản phẩm bàn giao', 'Vai trò', 'Giờ công'], ...wbsRows, [{ t: '' }, { t: 'TỔNG', bold: true }, '', '', { t: totalHours.toLocaleString('vi-VN'), bold: true, align: R }]], { size: 17 }),
   P('Giờ công là giả định (ước lượng chuyên gia – expert judgment) cho đội có kinh nghiệm trung bình.', { italics: true, size: 18 }),
@@ -380,7 +411,35 @@ const part4 = [
     ['5', 'Dời FR09–FR10 (khách hàng, nhân viên) sang giai đoạn 2', 'Giảm phạm vi', '≈ 3–4 ngày ở J và G', 'Cần Sponsor đồng ý; ảnh hưởng mục tiêu người dùng'],
   ], { size: 18 }),
   P('Lưu ý khi chọn phương án: cần rút ngắn ít nhất 11,33 ngày. Khi rút ngắn nhánh J quá 0,5 ngày, nhánh G → K sẽ trở thành găng, nên phải tính lại toàn bộ đường găng (sửa O/M/P hoặc quan hệ trước – sau trong file Excel để kiểm chứng).', { size: 19 }),
-  TODO('Phương án nhóm chọn, lý do chọn, và lịch mới sau khi nén (tính lại bằng Excel)'),
+  H3('Phương án chọn: kết hợp phương án 1, 2, 3, 5 và thêm 2 điểm fast-tracking (không dùng crashing)'),
+  T([700, 4700, 1500, 1500, 1200, 4970].map((w) => Math.round(w * LAND_W / 14570)), [
+    ['Mã', 'Hoạt động', 'TE gốc', 'TE mới', 'Chồng lấn', 'Thay đổi'],
+    ...SC.rows.filter((r) => r.note).map((r) => [{ t: r.id, bold: true, align: C }, r.name, { t: fmt((r.o0 + 4 * r.m0 + r.p0) / 6), align: R }, { t: fmt(r.te), align: R, bold: true }, { t: r.ov ? `${fmt(r.ov, 1)} ngày` : '—', align: C }, r.note]),
+  ], { size: 17 }),
+  P('Cách mô hình trong Excel (sheet NenLich): “chồng lấn” = số ngày hoạt động được bắt đầu sớm trước khi hoạt động trước kết thúc; ES = MAX(0; MAX(EF trước) − chồng lấn).', { italics: true, size: 18 }),
+  T([5200, 9370], [
+    ['Kết quả (tính lại bằng Excel)', 'Giá trị'],
+    ['T gốc → T sau khi nén', `${fmt(D.T)} → ${fmt(SC.T)} ngày làm việc (rút ngắn ${fmt(D.T - SC.T)} ngày)`],
+    ['Đường găng mới', SC.crit.join(' → ')],
+    ['Độ lệch chuẩn σ / dự trữ so với hạn', `${fmt(SC.sigma)} ngày / ${fmt(64 - SC.T)} ngày`],
+    ['Xác suất kịp hạn 31/12/2026', `≈ ${(SC.prob * 100).toLocaleString('vi-VN', { maximumFractionDigits: 1 })}% (lịch gốc: ≈ ${(D.prob * 100).toLocaleString('vi-VN', { maximumFractionDigits: 2 })}%)`],
+    ['Ngày kết thúc dự kiến', SC.end],
+    ['Chi phí phát sinh', 'Không (không thuê thêm người)'],
+  ]),
+  H3('Lý do chọn'),
+  ...bullets([
+    'Ngân sách chỉ còn dư khoảng 9 triệu. Crashing (phương án 4, khoảng 24 triệu) phải lấy quỹ dự phòng – quỹ này cần giữ cho rủi ro R01 (điểm cao nhất). Người mới vào giữa dự án còn mất thời gian làm quen (định luật Brooks).',
+    'FR09–FR10 được tài liệu xếp “Nên có”, không phải “Bắt buộc” → dời sang giai đoạn 2 ít ảnh hưởng nhất tới mục tiêu chính (cảnh báo hạn dùng, báo cáo nhanh).',
+    'Chỉ fast-tracking thì chưa đủ: nén riêng nhánh J sẽ làm nhánh G → K (slack gốc 0,5 ngày) trở thành găng. Vì vậy phải nén cả nhánh backend (D, G, K) – kết quả Excel xác nhận đường găng mới đi qua D → F → G → K.',
+    'Sau khi nén vẫn còn dự trữ khoảng 2 ngày và xác suất kịp hạn khoảng 74% – chấp nhận được, kết hợp theo dõi sát hằng tuần.',
+  ], { size: 19 }),
+  H3('Rủi ro của phương án và cách kiểm soát'),
+  ...bullets([
+    'Làm việc song song dễ phải làm lại (rework): chốt SRS phần lõi FR01–FR08 trước khi bắt đầu D, E; khóa API contract trước khi FE dùng API giả lập.',
+    'Kiểm thử theo module tăng số vòng kiểm thử hồi quy: QA lập test case cho từng module ngay từ hoạt động L (đang dư slack khoảng 23 ngày).',
+    'Dời FR09–FR10 cần Sponsor đồng ý: trình bày trong buổi demo tháng 10; nếu Sponsor không đồng ý thì phương án dự phòng là crashing với quỹ dự phòng.',
+    'Dự trữ chỉ khoảng 2 ngày: PM theo dõi slack của nhánh G → K hằng tuần; nếu G trễ quá 1 ngày thì kích hoạt phương án crashing.',
+  ], { size: 19 }),
 ];
 
 const part5 = [
@@ -444,6 +503,7 @@ const part7 = [
   T([600, 1100, 3600, 2169, 2169], [
     ['STT', 'Bài', 'Prompt đã dùng (tóm tắt)', 'AI trả lời tốt ở điểm nào', 'Nhóm đã sửa / bổ sung gì'],
     ['0', 'Chuẩn bị', 'Claude Code (trong VS Code): tạo tài liệu yêu cầu khách hàng, bản nháp Charter, WBS, PERT, dự toán, Risk Register và file Excel có công thức cho dự án PharmaDash', { t: '…', todo: true }, { t: '…', todo: true }],
+    ['0b', 'Bài 1–3', 'Claude Code: rà soát và viết lại mục tiêu SMART (1, 2, 4), đối chiếu phạm vi, chọn 3 câu hỏi ưu tiên, vẽ sơ đồ cây WBS, đề xuất phương án nén lịch và lập sheet NenLich', { t: '…', todo: true }, { t: '…', todo: true }],
     ['1', 'Bài 1', 'Soạn Project Charter theo 8 mục từ tài liệu trong Knowledge, liệt kê thông tin còn thiếu', { t: '…', todo: true }, { t: '…', todo: true }],
     ['2', 'Bài 2', 'Xây dựng WBS 3 cấp, bảng Mã | Tên | Sản phẩm | Giờ công, tuân thủ 100% và 8/80, từ điển WBS', { t: '…', todo: true }, { t: '…', todo: true }],
     ['3', 'Bài 3', 'Chọn 12–15 hoạt động, ước lượng O/M/P, TE, đường găng, độ lệch chuẩn', { t: '…', todo: true }, { t: '…', todo: true }],
@@ -458,6 +518,8 @@ const report = new Document({
   features: { updateFields: true },
   sections: [
     { properties: portrait, footers: { default: footer }, children: [...cover, ...part1, ...part2, ...part3] },
+    { properties: landscape, footers: { default: footer }, children: part3tree },
+    { properties: portrait, footers: { default: footer }, children: part3b },
     { properties: landscape, footers: { default: footer }, children: part4 },
     { properties: portrait, footers: { default: footer }, children: part5 },
     { properties: landscape, footers: { default: footer }, children: part6 },

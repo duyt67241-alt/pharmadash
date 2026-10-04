@@ -11,22 +11,27 @@ Bài lab của thầy dùng tình huống EduReg làm ví dụ; nhóm chọn đ�
 | `QLDA_Nhom_PharmaDash_Lab.docx` | Khung báo cáo nộp, đã có bản nháp Charter, WBS, PERT, chi phí, rủi ro. Đổi tên thành `QLDA_Nhom<số>_Lab.docx` |
 | `QLDA_PharmaDash_LichDuAn.xlsx` | File Excel nộp kèm: WBS, chi phí, PERT/CPM, Gantt, Risk Register, ma trận – toàn bộ tính bằng công thức |
 
-## Nhóm vẫn phải tự làm (bài lab chấm các phần này)
+## Đã có trong báo cáo (AI soạn – nhóm đọc lại và chỉnh nếu cần)
 
-Các chỗ nhóm cần điền được **tô vàng `[NHÓM ĐIỀN: …]`** trong file Word (và nền vàng trong Excel).
+- Rà soát SMART, viết lại mục tiêu 1, 2, 4; đối chiếu phạm vi với tài liệu; chọn 3 câu hỏi quan trọng nhất (mục 2).
+- Sơ đồ cây WBS 3 cấp (mục 3.1).
+- Phương án nén lịch đã chọn + sheet `NenLich` trong Excel: T từ 75,33 xuống 61,83 ngày, kịp hạn ~74% (mục 4.5).
 
-1. **Phần A – Claude Project:** tạo Project `QLDA_Nhom<số>_PharmaDash`, dán Instructions, tải tài liệu yêu cầu lên Knowledge, hỏi thử "Tóm tắt 5 yêu cầu chính…", **chụp màn hình** chèn vào mục 1.
-2. **Chạy từng bài trong Claude Project** (chat Bai1_Charter … Bai5_PhanBien) bằng các prompt mẫu của thầy; so sánh câu trả lời của Claude với bản nháp trong báo cáo, **sửa theo ý nhóm** và ghi vào nhật ký AI (mục 8).
-3. **Bài 1:** viết lại ≥ 2 mục tiêu SMART, đối chiếu phạm vi, chọn 3 câu hỏi quan trọng nhất và giải thích.
-4. **Bài 2:** tự vẽ **sơ đồ cây WBS** (draw.io / SmartArt) – không chỉ dán bảng.
-5. **Bài 3:** nhập TE mà Claude trả lời vào cột vàng sheet PERT, ghi chỗ khác biệt; **chọn phương án nén lịch** (lịch gốc trễ 11,33 ngày) và lý giải.
-6. **Bài 4:** bổ sung **2 rủi ro R11, R12** của nhóm (ma trận tự cập nhật; nhớ sắp lại bảng theo điểm).
-7. **Bài 5:** dán 5 câu hỏi của "Sponsor" và **tự viết câu trả lời**, viết phần phản tư – theo quy định bài lab, phần này không nhờ AI.
+## Nhóm vẫn phải tự làm (không thể / không được nhờ AI làm thay)
 
-> Quy định của thầy: dán nguyên văn đầu ra AI không kiểm tra/chỉnh sửa bị trừ tới 50% điểm tiêu chí. Bản nháp ở đây là điểm xuất phát – nhóm cần đọc, kiểm tra số liệu và chỉnh sửa, và ghi rõ trong nhật ký rằng bản nháp do AI (Claude Code) tạo.
+Các chỗ còn tô vàng `[NHÓM ĐIỀN: …]` trong file Word:
+
+1. **Phần A:** tạo Claude Project bằng tài khoản của nhóm, chụp ảnh Instructions, Knowledge, câu trả lời kiểm tra (mục 1).
+2. **Bài 3:** chạy chat `Bai3_Lich` trong Project, nhập TE của Claude vào cột vàng sheet PERT, ghi chỗ khác biệt (mục 4.4).
+3. **Bài 4:** 2 rủi ro R11, R12 **từ kinh nghiệm của nhóm** (đề yêu cầu rủi ro AI không nêu).
+4. **Bài 5:** 5 câu hỏi Sponsor lấy từ chat `Bai5_PhanBien`, câu trả lời và phản tư **tự viết** (đề cấm nhờ AI).
+5. Nhật ký AI (mục 8), tên/MSSV, xóa hết `[NHÓM ĐIỀN]`, cập nhật mục lục.
+
+> Quy định của thầy: dán nguyên văn đầu ra AI không kiểm tra/chỉnh sửa bị trừ tới 50% điểm tiêu chí. Nhật ký AI đã ghi rõ các phần do Claude Code soạn (dòng 0, 0b) – nhóm giữ nguyên, điền thêm cột nhận xét.
 
 ## Số liệu chính (đã kiểm tra lại bằng Excel và tính độc lập bằng Python)
 
 - WBS: 7 hạng mục cấp 1, 47 gói công việc, 1.364 giờ công, không gói nào vi phạm 8/80.
 - Dự toán: 240.988.000 đ (gồm 10% dự phòng) / ngân sách 250.000.000 đ.
-- PERT: đường găng A → B → C → E → I → J → M → N → O, T = 75,33 ngày làm việc > 64 ngày tới hạn; σ = 3,61; xác suất kịp hạn ≈ 0,09%.
+- PERT gốc: đường găng A → B → C → E → I → J → M → N → O, T = 75,33 ngày > 64 ngày tới hạn; σ = 3,61; xác suất kịp hạn ≈ 0,09%.
+- Sau khi nén: đường găng A → B → C → D → F → G → K → M → N → O, T = 61,83 ngày, kết thúc 29/12/2026; σ = 3,39; xác suất kịp hạn ≈ 74%.

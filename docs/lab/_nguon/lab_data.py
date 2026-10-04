@@ -199,3 +199,15 @@ RISKS = [
          action='Chọn nhà cung cấp VPS có cam kết SLA 99,9% trong hợp đồng; sao lưu hằng ngày; hướng dẫn phương án xử lý sự cố',
          owner='BE'),
 ]
+
+# Phương án nén lịch đề xuất (AI đề xuất – nhóm xác nhận):
+# 'ov' = số ngày được bắt đầu sớm trước khi các hoạt động trước kết thúc (fast-tracking)
+# o/m/p mới = giảm phạm vi (dời FR09–FR10 sang giai đoạn 2)
+SCENARIO = {
+    'D': dict(ov=2, note='Fast-tracking: thiết kế kiến trúc bắt đầu khi SRS đã duyệt phần lõi (FR01–FR08)'),
+    'E': dict(ov=2, note='Fast-tracking: thiết kế giao diện bắt đầu song song giai đoạn cuối SRS'),
+    'G': dict(o=12, m=15, p=22, note='Giảm phạm vi: dời API khách hàng thân thiết, nhân viên/ca (FR09–FR10) sang giai đoạn 2'),
+    'J': dict(o=12, m=16, p=23, ov=3.5, note='Giảm phạm vi FR09–FR10 + fast-tracking: làm màn hình trên mockup và API giả lập khi khung giao diện xong khoảng 50%'),
+    'K': dict(ov=3, note='Fast-tracking: xuất báo cáo làm khi API doanh thu, tồn kho đã xong (không chờ toàn bộ API)'),
+    'M': dict(ov=5, note='Fast-tracking: kiểm thử theo từng module xong trước, chồng 5 ngày cuối giai đoạn phát triển'),
+}
